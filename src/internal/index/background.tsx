@@ -1,81 +1,48 @@
 ﻿import * as THREE from "three"
-import { Suspense, useCallback, useRef, useMemo } from "react"
+import { useRef, useMemo } from "react"
 import React from "react"
-import { Canvas, useFrame, useThree, useRender } from "react-three-fiber"
+import { Canvas, useThree, useRender } from "react-three-fiber"
 import useGetWindowSize from "../../hooks/useGetWindowSize"
 import styled from "@emotion/styled"
 
-const tempColor = new THREE.Color()
-const colors_ = [
-  0xffffff,
-  0xffffff,
-  0xffffff,
-  0xffffff,
-  0xffffff,
-  0xffffff,
-  0xffffff,
-  0xffffff,
-  0xe16b8c,
-  0x113285,
-  0xe16b8c,
-  0x113285,
-]
-const colors = new Array<string>(3000)
+const colorCode = [0xffffff, 0xffffff, 0xffffff, 0xcb1b45, 0x113285]
+const colorPalette = new Array<string>(3000)
   .fill("")
-  .map(() => colors_[Math.floor(Math.random() * (colors_.length + 1))])
+  .map(() => colorCode[Math.floor(Math.random() * (colorCode.length + 1))])
 
-const direction = {
-  xMin: -0.6,
-  xMax: 0.3,
-  yMin: -1,
-  yMax: -0.6,
-  zMin: -0.6,
-  zMax: 0.3,
-}
-const getVelocityMultiplier = (min: number, max: number) =>
-  Math.random() * (max - min) + min
-
-function Swarm({ count }) {
+const Particles = ({ count }) => {
+  const setColors = new THREE.Color()
   const mesh = useRef()
   const dummy = useMemo(() => new THREE.Object3D(), [])
+  const { size } = useThree()
+  const { width, height } = useGetWindowSize()
+  const xBounds = width / 20
+  const yBounds = height / 20
+
   const colorArray = useMemo(
     () =>
       Float32Array.from(
-        new Array(3000)
-          .fill("")
-          .flatMap((_, i) => tempColor.set(colors[i]).toArray())
+        new Array<number>(3000)
+          .fill(0)
+          .flatMap((_, i) => setColors.set(colorPalette[i]).toArray())
       ),
     []
   )
-  const { size } = useThree()
-  const { width, height } = useGetWindowSize()
-  const xDirection = getVelocityMultiplier(direction.xMin, direction.xMax) * 2
-  const yDirection = getVelocityMultiplier(direction.yMin, direction.yMax) * 2
-  const xBounds = width / 22
-  const yBounds = height
 
   const particles = useMemo(() => {
     const temp = []
     for (let i = 0; i < count; i++) {
-      const t = Math.random() / 10
-      const factor = 20 + Math.random() * 1
-      const speed = Math.random() / 10 + 0.1
-      let xFactor = Math.random() * xBounds - xBounds / 2
-      let yFactor = Math.random() * yBounds - yBounds / 2
-      const xRandom = 0.15 * (Math.random() - 0.5)
-      const ballSize = 0.03 + Math.random() / 50
-      const xPos = xFactor
-      const yPos = yFactor
+      const speed = Math.random() / 10 + 0.2
+      const xPos = Math.random() * xBounds - xBounds / 2
+      const yPos = Math.random() * yBounds - yBounds / 2
+      const xRandom = 0.005 * (Math.random() - 0.5)
+      const ballSize = 0.015 + Math.random() / 50
       temp.push({
-        t,
-        factor,
         speed,
-        xFactor,
-        yFactor,
-        xRandom,
-        ballSize,
         xPos,
         yPos,
+        xRandom,
+        ballSize,
       })
     }
     return temp
@@ -83,28 +50,15 @@ function Swarm({ count }) {
 
   useRender(() => {
     particles.forEach((particle, i) => {
-      let {
-        t,
-        factor,
-        speed,
-        xFactor,
-        yFactor,
-        xRandom,
-        ballSize,
-        xPos,
-        yPos,
-      } = particle
-      t = particle.t = speed
-      // let xPos = xFactor + xDirection * speed * t * xRandom;
-      // let yPos = yFactor + yDirection * (speed + ballSize) * t;
-      xPos = particle.xPos += xDirection * speed * xRandom
-      yPos = particle.yPos += yDirection * (speed + ballSize) * t * 7
+      let { speed, xPos, yPos, xRandom, ballSize } = particle
+      xPos = particle.xPos += xRandom
+      yPos = particle.yPos -= (speed + ballSize) * 0.1
       if (xPos > xBounds / 2) xPos = particle.xPos -= xBounds / 2
       else if (xPos < -xBounds / 2) xPos = particle.xPos += xBounds / 2
       if (yPos > yBounds / 2) yPos = particle.yPos -= yBounds
       else if (yPos < -yBounds / 2) yPos = particle.yPos += yBounds
 
-      dummy.position.set(xPos, yPos / 20, -20)
+      dummy.position.set(xPos, yPos, -20)
       dummy.scale.set(ballSize, ballSize, ballSize)
       dummy.updateMatrix()
       mesh.current.setMatrixAt(i, dummy.matrix)
@@ -130,21 +84,33 @@ function Swarm({ count }) {
   )
 }
 
-export const StyledBackground = () => {
+export const Background: React.FCX = ({ className }) => {
   return (
-    <Canvas
-      gl={{ alpha: false, antialias: false, logarithmicDepthBuffer: true }}
-      camera={{ position: [0, 0, 1.5] }}
-      onCreated={({ gl }) => {
-        gl.setClearColor("black")
-        gl.toneMapping = THREE.ACESFilmicToneMapping
-        gl.outputEncoding = THREE.sRGBEncoding
-      }}
-    >
-      <ambientLight intensity={0.2} />
-      <Swarm count={3000} />
-    </Canvas>
+    <div className={className}>
+      <Canvas
+        gl={{ alpha: false, antialias: false, logarithmicDepthBuffer: true }}
+        camera={{ position: [0, 0, 1.5] }}
+        onCreated={({ gl }) => {
+          gl.setClearColor("black")
+          gl.toneMapping = THREE.ACESFilmicToneMapping
+          gl.outputEncoding = THREE.sRGBEncoding
+        }}
+      >
+        <ambientLight intensity={2} />
+        <Particles count={3000} />
+      </Canvas>
+    </div>
   )
 }
+
+export const StyledBackground = styled(Background)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+`
 
 export default StyledBackground
