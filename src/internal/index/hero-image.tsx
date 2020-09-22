@@ -16,15 +16,15 @@ const StyledSocialLink = styled(SocialLink)`
   justify-content: center;
   width: 100%;
   * {
-    width: 75px;
-    height: 75px;
-    padding: 10px 10px 0px;
+    width: 50px;
+    height: 50px;
+    margin: 30px 20px 0px;
   }
   @media screen and (max-width: 768px) {
     * {
       width: 30px;
       height: 30px;
-      padding: 7.5px 7.5px 0px;
+      margin: 7.5px 7.5px 0px;
     }
   }
   @media screen and (max-width: 480px) {
@@ -41,7 +41,7 @@ const HeroImage = ({ className }) => (
 export const StyledHeroImage = styled(HeroImage)`
   text-align: center;
   h1 {
-    padding: 100px 20px 50px;
+    margin: 10px 20px 50px;
   }
   img {
     width: 200px;
@@ -49,7 +49,7 @@ export const StyledHeroImage = styled(HeroImage)`
   }
   @media screen and (max-width: 768px) {
     h1 {
-      padding: 50px 20px 50px;
+      margin: 10px 20px 10px;
     }
     img {
       width: 150px;

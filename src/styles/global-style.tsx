@@ -9,9 +9,9 @@ export const GlobalCSS = () => (
       html {
         font-size: 62.5%;
         body {
-          background-color: #09090f;
-          color: #fcfaf2;
-          font-size: 1.6em;
+          background-color: #090909;
+          color: #2ea9df;
+          font-size: 2em;
           overflow-x: hidden;
           overscroll-behavior-y: none;
           font-family: -apple-system, "Hiragino Kaku Gothic ProN", "Lato",
