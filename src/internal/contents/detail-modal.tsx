@@ -1,7 +1,16 @@
-﻿import React, { useState } from "react"
+﻿import * as React from "react"
+import { useState } from "react"
 import { ClassNames } from "@emotion/core"
 import CloseButton from "../../components/closeButton"
 import Modal from "react-modal"
+import { jsx, css, keyframes } from "@emotion/core"
+
+const buttonStyle = css`
+  background-color: white;
+  border-radius: 2px 4px 2px;
+  margin-bottom: 1em;
+`
+
 export const DetailModal = ({ children }) => {
   const [modalIsOpen, setIsOpen] = useState(false)
   function closeModal() {
@@ -10,7 +19,9 @@ export const DetailModal = ({ children }) => {
 
   return (
     <>
-      <button onClick={() => setIsOpen(true)}>Open Modal</button>
+      <button onClick={() => setIsOpen(true)} css={buttonStyle}>
+        😉
+      </button>
       <ClassNames>
         {({ css, cx }) => (
           <Modal
