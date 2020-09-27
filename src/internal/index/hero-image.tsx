@@ -11,8 +11,9 @@ const HeroImage = ({ className }) => (
 
 export const StyledHeroImage = styled(HeroImage)`
   text-align: center;
+  margin: 30px auto 50px;
   h1 {
-    margin: 10px 20px 50px;
+    margin: 10px 20px;
   }
   img {
     width: 200px;
@@ -20,7 +21,7 @@ export const StyledHeroImage = styled(HeroImage)`
   }
   @media screen and (max-width: 768px) {
     h1 {
-      margin: 10px 20px 10px;
+      margin: 10px 20px;
     }
     img {
       width: 150px;

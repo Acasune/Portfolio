@@ -1,9 +1,9 @@
 ﻿import * as React from "react"
 import { useState } from "react"
 import { ClassNames } from "@emotion/core"
-import CloseButton from "../../components/closeButton"
+import CloseButton from "./closeButton"
 import Modal from "react-modal"
-import { jsx, css, keyframes } from "@emotion/core"
+import { css } from "@emotion/core"
 
 const buttonStyle = css`
   background-color: white;

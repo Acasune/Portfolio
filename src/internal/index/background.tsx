@@ -2,11 +2,13 @@
 import { useRef, useMemo } from "react"
 import React from "react"
 import { Canvas, useThree, useRender } from "react-three-fiber"
-import useGetWindowSize from "../../hooks/useGetWindowSize"
 import styled from "@emotion/styled"
 
+const { innerWidth: width, innerHeight: height } = window
+const nParticles = ((width * height) / 500) | 0
+
 const colorCode = [0xffffff, 0xffffff, 0xffffff, 0xcb1b45, 0x113285]
-const colorPalette = new Array<string>(3000)
+const colorPalette = new Array<string>(nParticles)
   .fill("")
   .map(() => colorCode[Math.floor(Math.random() * (colorCode.length + 1))])
 
@@ -15,14 +17,13 @@ const Particles = ({ count }) => {
   const mesh = useRef()
   const dummy = useMemo(() => new THREE.Object3D(), [])
   const { size } = useThree()
-  const { width, height } = useGetWindowSize()
   const xBounds = width / 20
   const yBounds = height / 20
 
   const colorArray = useMemo(
     () =>
       Float32Array.from(
-        new Array<number>(3000)
+        new Array<number>(nParticles)
           .fill(0)
           .flatMap((_, i) => setColors.set(colorPalette[i]).toArray())
       ),
@@ -52,7 +53,7 @@ const Particles = ({ count }) => {
     particles.forEach((particle, i) => {
       let { speed, xPos, yPos, xRandom, ballSize } = particle
       xPos = particle.xPos += xRandom
-      yPos = particle.yPos -= (speed + ballSize) * 0.1
+      yPos = particle.yPos -= (speed + ballSize) * 0.05
       if (xPos > xBounds / 2) xPos = particle.xPos -= xBounds / 2
       else if (xPos < -xBounds / 2) xPos = particle.xPos += xBounds / 2
       if (yPos > yBounds / 2) yPos = particle.yPos -= yBounds
@@ -97,7 +98,7 @@ export const Background: React.FCX = ({ className }) => {
         }}
       >
         <ambientLight intensity={2} />
-        <Particles count={3000} />
+        <Particles count={nParticles} />
       </Canvas>
     </div>
   )

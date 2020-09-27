@@ -10,7 +10,7 @@ export const GlobalCSS = () => (
         font-size: 62.5%;
         body {
           background-color: #090909;
-          color: white;
+          color: #fff;
           font-size: 2em;
           overflow-x: hidden;
           overscroll-behavior-y: none;

@@ -6,10 +6,9 @@ export const baseStyle = css`
   height: auto;
   min-height: 90vh;
   margin: 0 auto;
-  padding: 5rem 5% 0 5%;
+  text-align: center;
   h1 {
-    font-size: 4rem;
-    padding-bottom: 3rem;
+    font-size: 3rem;
   }
   @media screen and (max-width: 768px) {
   }

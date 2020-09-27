@@ -1,8 +1,14 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    siteTitle: `Acasune's Portfolio`,
+    siteTitleAlt: `Acasune's Portfolio`,
+    siteHeadline: `Acasune's Portfolio made by gatsby.`,
+    siteUrl: `https://acasune-portfolio.com`,
+    siteDescription: `Acasune is a Japanese web developer. This website will be used not only for displaying my works but also for introduce my favorites.`,
+    author: `@acasune`,
+    siteLanguage: `ja`,
+    author: `@acasune`,
+    basePath: `/`,
   },
   plugins: [
     `gatsby-plugin-typescript`,
