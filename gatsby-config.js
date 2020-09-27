@@ -1,14 +1,18 @@
+const config = {
+  siteTitle: `Acasune's Portfolio`,
+  siteTitleAlt: `Acasune's Portfolio`,
+  siteHeadline: `Acasune's Portfolio made by gatsby.`,
+  siteUrl: `https://acasune-portfolio.com`,
+  siteDescription: `Acasune is a Japanese web developer. This website will be used not only for displaying my works but also for introduce my favorites.`,
+  author: `@acasune`,
+  siteLanguage: `ja`,
+  author: `@acasune`,
+  basePath: `/`,
+};
+
 module.exports = {
   siteMetadata: {
-    siteTitle: `Acasune's Portfolio`,
-    siteTitleAlt: `Acasune's Portfolio`,
-    siteHeadline: `Acasune's Portfolio made by gatsby.`,
-    siteUrl: `https://acasune-portfolio.com`,
-    siteDescription: `Acasune is a Japanese web developer. This website will be used not only for displaying my works but also for introduce my favorites.`,
-    author: `@acasune`,
-    siteLanguage: `ja`,
-    author: `@acasune`,
-    basePath: `/`,
+    ...config,
   },
   plugins: [
     `gatsby-plugin-typescript`,
@@ -26,13 +30,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: config.siteTitle,
+        short_name: `acasune`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`,
+        background_color: `#090909`,
+        theme_color: `#090909`,
+        display: `standalone`,
+        icon: `src/images/acasune.png`,
       },
     },
     {
