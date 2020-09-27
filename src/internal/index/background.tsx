@@ -3,9 +3,10 @@ import { useRef, useMemo } from "react"
 import React from "react"
 import { Canvas, useThree, useRender } from "react-three-fiber"
 import styled from "@emotion/styled"
+import { window } from "ssr-window"
 
 const { innerWidth: width, innerHeight: height } = window
-const nParticles = ((width * height) / 500) | 0
+const nParticles = ((width * height) / 250) | 0
 
 const colorCode = [0xffffff, 0xffffff, 0xffffff, 0xcb1b45, 0x113285]
 const colorPalette = new Array<string>(nParticles)
